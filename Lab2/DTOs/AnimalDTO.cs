@@ -20,7 +20,8 @@ namespace Lab2.DTOs
             {
                 Id = animal.Id,
                 Name = animal.Name,
-                DateOfBirth = animal.DateOfBirth
+                DateOfBirth = animal.DateOfBirth,
+                AnimalType = animal.AnimalType.MapToBasicAnimalTypeDTO()
             };
         }
         public static List<AnimalDTO> MapToAnimalDTOs(this ICollection<Animal> animals)

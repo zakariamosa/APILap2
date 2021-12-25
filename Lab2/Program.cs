@@ -1,6 +1,7 @@
 //using Animal.Repo;
 
 using Lab2.Models;
+using Lab2.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddScoped<IAnimal, AnimalRepo>();
+builder.Services.AddScoped<IAnimalRepo, AnimalRepo>();
 //builder.Services.AddSingleton<IAnimal, AnimalRepo>();
 builder.Services.AddDbContext<AnimalsContext>();
 builder.Services.AddControllersWithViews()

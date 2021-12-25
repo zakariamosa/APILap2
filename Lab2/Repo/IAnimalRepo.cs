@@ -1,10 +1,11 @@
-﻿using Lab2.Models;
+﻿using Lab2.DTOs;
+using Lab2.Models;
 
 namespace Lab2.Repo
 {
     public interface IAnimalRepo
     {
-        List<Animal> GetAll();
+        ICollection<Animal> GetAll();
         Animal GetByID(int id);
 
         Animal CreateAnimal(CreateAnimalDTO Animal);

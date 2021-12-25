@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lab2.Models;
+using Lab2.Repo;
+using Lab2.DTOs;
 
 namespace Lab2.Controllers
 {
@@ -14,97 +16,68 @@ namespace Lab2.Controllers
     [ApiController]
     public class AnimalsController : ControllerBase
     {
-        private readonly AnimalsContext _context;
+        private readonly IAnimalRepo _repo;
 
-        public AnimalsController(AnimalsContext context)
+        public AnimalsController(IAnimalRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         // GET: api/Animals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animal>>> GetAnimals()
+        public  IActionResult GetAnimals()
         {
-            return await _context.Animals.ToListAsync();
+            //return await _context.Animals.ToListAsync();
+            var animals=   _repo.GetAll().ToList().MapToAnimalDTOs();
+            return Ok(animals);
         }
 
         // GET: api/Animals/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Animal>> GetAnimal(int id)
+        public IActionResult GetAnimal(int id)
         {
-            var animal = await _context.Animals.FindAsync(id);
+            var animal = _repo.GetByID(id);
 
             if (animal == null)
             {
                 return NotFound();
             }
 
-            return animal;
+            return Ok(animal);
         }
 
         // PUT: api/Animals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnimal(int id, Animal animal)
+        public IActionResult PutAnimal(int id, [FromBody] Animal animal)
         {
-            if (id != animal.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(animal).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AnimalExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedanimal=_repo.UpdateAnimal(animal,id);
+            var animaldto = updatedanimal.MapToAnimalDTO();
+            return Ok(animaldto);
         }
 
         // POST: api/Animals
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Animal>> PostAnimal(Animal animal)
+        public IActionResult PostAnimal([FromBody] CreateAnimalDTO createAnimalDTO)
         {
-            var animaltyp = _context.AnimalTypes.FirstOrDefault(t => t.Id == animal.AnimalTypeId);
-            animal.AnimalType= animaltyp;
-            _context.Animals.Add(animal);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAnimal", new { id = animal.Id }, animal);
+            Animal createdAnimal = _repo.CreateAnimal(createAnimalDTO);
+            //AnimalDTO AnimalDTO= MapAnimalToAnimalDTO(createdAnimal);
+            AnimalDTO AnimalSavedDTO = _repo.GetByID(createdAnimal.Id).MapToAnimalDTO();
+            return CreatedAtAction(nameof(GetAnimal), new { id = AnimalSavedDTO.Id }, AnimalSavedDTO);
         }
 
         // DELETE: api/Animals/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnimal(int id)
+        public IActionResult DeleteAnimal(int id)
         {
-            var animal = await _context.Animals.FindAsync(id);
-            if (animal == null)
-            {
-                return NotFound();
-            }
-
-            _context.Animals.Remove(animal);
-            await _context.SaveChangesAsync();
-
+            _repo.DeleteAnimal(id);
             return NoContent();
         }
 
         private bool AnimalExists(int id)
         {
-            return _context.Animals.Any(e => e.Id == id);
+            return _repo.GetAll().ToList().Any(e => e.Id == id);
         }
     }
 }
