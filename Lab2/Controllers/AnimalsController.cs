@@ -49,10 +49,11 @@ namespace Lab2.Controllers
         // PUT: api/Animals/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult PutAnimal(int id, [FromBody] Animal animal)
+        public IActionResult PutAnimal(int id, [FromBody] AnimalDTO animaldto)
         {
-            var updatedanimal=_repo.UpdateAnimal(animal,id);
-            var animaldto = updatedanimal.MapToAnimalDTO();
+            Animal an = new Animal { AnimalTypeId=animaldto.AnimalType.Id, Name=animaldto.Name, DateOfBirth=animaldto.DateOfBirth, Id=animaldto.Id};
+            var updatedanimal=_repo.UpdateAnimal(an, id);
+            //var animaldto = updatedanimal.MapToAnimalDTO();
             return Ok(animaldto);
         }
 

@@ -49,9 +49,11 @@ namespace Lab2.Repo
                 existingAnimal.Name = Animal.Name;
                 existingAnimal.AnimalTypeId= Animal.AnimalTypeId;
                 existingAnimal.DateOfBirth = Animal.DateOfBirth;
+                _context.Animals.Update(existingAnimal);
             }
+            
             _context.SaveChanges();
-            return existingAnimal;
+            return GetByID(id);
         }
     }
 }
