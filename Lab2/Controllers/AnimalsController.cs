@@ -54,7 +54,7 @@ namespace Lab2.Controllers
             Animal an = new Animal { AnimalTypeId=animaldto.AnimalType.Id, Name=animaldto.Name, DateOfBirth=animaldto.DateOfBirth, Id=animaldto.Id};
             var updatedanimal=_repo.UpdateAnimal(an, id);
             //var animaldto = updatedanimal.MapToAnimalDTO();
-            return Ok(animaldto);
+            return Ok(updatedanimal);
         }
 
         // POST: api/Animals

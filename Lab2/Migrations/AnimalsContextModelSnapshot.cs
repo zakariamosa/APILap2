@@ -52,6 +52,56 @@ namespace Lab2.Migrations
                     b.HasIndex("AnimalTypeId");
 
                     b.ToTable("Animals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AnimalTypeId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9381),
+                            Name = "Animal1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AnimalTypeId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9430),
+                            Name = "Animal2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AnimalTypeId = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9433),
+                            Name = "Animal3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AnimalTypeId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9435),
+                            Name = "Animal4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AnimalTypeId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9437),
+                            Name = "Animal5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AnimalTypeId = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2021, 12, 28, 20, 33, 52, 499, DateTimeKind.Local).AddTicks(9439),
+                            Name = "Animal6"
+                        });
                 });
 
             modelBuilder.Entity("Lab2.Models.AnimalType", b =>
