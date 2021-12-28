@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab2.Migrations
 {
     [DbContext(typeof(AnimalsContext))]
-    [Migration("20211224132313_first_migration_create_database")]
-    partial class first_migration_create_database
+    [Migration("20211228121018_initialize_database")]
+    partial class initialize_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,6 +80,22 @@ namespace Lab2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnimalTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "dog",
+                            NumberOfLegs = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "bird",
+                            NumberOfLegs = 2
+                        });
                 });
 
             modelBuilder.Entity("Lab2.Models.Animal", b =>

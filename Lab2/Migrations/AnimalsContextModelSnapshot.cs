@@ -78,6 +78,22 @@ namespace Lab2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnimalTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "dog",
+                            NumberOfLegs = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "bird",
+                            NumberOfLegs = 2
+                        });
                 });
 
             modelBuilder.Entity("Lab2.Models.Animal", b =>

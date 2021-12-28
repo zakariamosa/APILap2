@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Lab2.Migrations
 {
-    public partial class first_migration_create_database : Migration
+    public partial class initialize_database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,16 @@ namespace Lab2.Migrations
                         principalTable: "AnimalTypes",
                         principalColumn: "ID");
                 });
+
+            migrationBuilder.InsertData(
+                table: "AnimalTypes",
+                columns: new[] { "ID", "Name", "NumberOfLegs" },
+                values: new object[] { 1, "dog", 4 });
+
+            migrationBuilder.InsertData(
+                table: "AnimalTypes",
+                columns: new[] { "ID", "Name", "NumberOfLegs" },
+                values: new object[] { 2, "bird", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animals_AnimalTypeID",
